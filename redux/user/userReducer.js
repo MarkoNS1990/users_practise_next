@@ -1,4 +1,4 @@
-import { GET_SINGLE_USER } from "./userTypes";
+import { GET_SINGLE_USER, UPDATE_USER } from "./userTypes";
 
 const initialState = {
   user: {},

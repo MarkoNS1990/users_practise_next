@@ -20,7 +20,7 @@ const fetchUsersSuccess = (users) => {
   };
 };
 
-const fetchUsersFailure = (error) => {
+export const fetchUsersFailure = (error) => {
   return {
     type: FETCH_USERS_FAILURE,
     payload: error,

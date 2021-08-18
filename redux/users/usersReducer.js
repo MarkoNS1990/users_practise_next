@@ -1,3 +1,4 @@
+import { UPDATE_USER } from "../user/userTypes";
 import {
   DELETE_USER,
   FETCH_USERS_BEGIN,
@@ -35,6 +36,13 @@ const usersReducer = (state = initialState, action) => {
       return {
         ...state,
         users: [...state.users.filter((user) => user !== action.payload)],
+      };
+    case UPDATE_USER:
+      const index = action.payload.id;
+      state.users.splice(index, 1, action.payload);
+      return {
+        ...state,
+        users: [...state.users],
       };
 
     default:
