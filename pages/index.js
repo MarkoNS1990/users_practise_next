@@ -63,7 +63,7 @@ export default function Home() {
                     key={user.id}
                     className="bg-emerald-200 border-2 border-gray-300"
                   >
-                    <td className="font-semibold text-2xl cursor-pointer px-6 py-4 whitespace-nowrap">
+                    <td className="font-semibold text-2xl px-6 py-4 whitespace-nowrap">
                       {user.name}
                     </td>
                     <td>
