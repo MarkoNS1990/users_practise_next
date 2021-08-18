@@ -14,6 +14,7 @@ export default function Home() {
   const users = useSelector((state) => state.users.users);
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
+
   const [showInput, setShowInput] = useState(false);
   const [name, setName] = useState("");
 
@@ -57,7 +58,7 @@ export default function Home() {
           </thead>
           <tbody className="bg-white ">
             {users &&
-              users.map((user) => (
+              users?.map((user) => (
                 <>
                   <tr
                     key={user.id}
