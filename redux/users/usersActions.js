@@ -4,6 +4,7 @@ import {
   FETCH_USERS_BEGIN,
   FETCH_USERS_FAILURE,
   FETCH_USERS_SUCCESS,
+  GET_SINGLE_USER,
 } from "./usersTypes";
 
 const fetchUsersBegin = () => {

@@ -1,17 +1,25 @@
 import Head from "next/head";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchDeleteUser, fetchUsers } from "../redux/users/usersActions";
 import { TrashIcon, PencilIcon } from "@heroicons/react/solid";
 import { BeakerIcon } from "@heroicons/react/solid";
+import Popup from "../components/Popup";
+import { fetchSingleUser } from "../redux/user/userActions";
 
 export default function Home() {
-  const users = useSelector((state) => state.users);
+  const users = useSelector((state) => state.users.users);
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);
+
+  const onUserClick = (user) => {
+    setShowModal(true);
+    dispatch(fetchSingleUser(user));
+  };
 
   return (
     <div>
@@ -35,17 +43,20 @@ export default function Home() {
                   key={user.id}
                   className="bg-emerald-200 border-2 border-gray-300"
                 >
-                  <td className="font-semibold text-2xl cursor-pointer px-6 py-4 whitespace-nowrap">
+                  <td
+                    className="font-semibold text-2xl cursor-pointer px-6 py-4 whitespace-nowrap"
+                    onClick={() => onUserClick(user)}
+                  >
                     {user.name}
                   </td>
                   <td>
                     <TrashIcon
-                      className="h-5 w-5 text-red-500 cursor-pointer"
+                      className="h-7 w-7 text-red-500 cursor-pointer"
                       onClick={() => dispatch(fetchDeleteUser(user))}
                     />
                   </td>
                   <td>
-                    <PencilIcon className="h-5 w-5 text-blue-500 cursor-pointer /" />
+                    <PencilIcon className="h-7 w-7 ml-3 mr-2 text-blue-500 cursor-pointer /" />
                   </td>
                 </tr>
               ))}
@@ -55,6 +66,7 @@ export default function Home() {
           Add user
         </button>
       </div>
+      <Popup showModal={showModal} setShowModal={setShowModal} />
     </div>
   );
 }

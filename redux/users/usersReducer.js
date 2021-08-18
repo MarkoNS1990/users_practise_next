@@ -3,6 +3,7 @@ import {
   FETCH_USERS_BEGIN,
   FETCH_USERS_FAILURE,
   FETCH_USERS_SUCCESS,
+  GET_SINGLE_USER,
 } from "./usersTypes";
 
 const initialState = {
@@ -35,6 +36,7 @@ const usersReducer = (state = initialState, action) => {
         ...state,
         users: [...state.users.filter((user) => user !== action.payload)],
       };
+
     default:
       return state;
   }
