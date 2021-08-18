@@ -39,8 +39,10 @@ const usersReducer = (state = initialState, action) => {
         users: [...state.users.filter((user) => user !== action.payload)],
       };
     case UPDATE_USER:
-      const index = action.payload.id;
-      state.users.splice(index - 1, 1, action.payload);
+      const userToUpdate = state.users.filter(
+        (user) => user.id === action.payload.id
+      )[0];
+      state.users.splice(state.users.indexOf(userToUpdate), 1, action.payload);
       return {
         ...state,
         users: [...state.users],
