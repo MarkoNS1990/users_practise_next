@@ -1,5 +1,6 @@
 import { UPDATE_USER } from "../user/userTypes";
 import {
+  ADD_USER,
   DELETE_USER,
   FETCH_USERS_BEGIN,
   FETCH_USERS_FAILURE,
@@ -39,10 +40,15 @@ const usersReducer = (state = initialState, action) => {
       };
     case UPDATE_USER:
       const index = action.payload.id;
-      state.users.splice(index, 1, action.payload);
+      state.users.splice(index - 1, 1, action.payload);
       return {
         ...state,
         users: [...state.users],
+      };
+    case ADD_USER:
+      return {
+        ...state,
+        users: [...state.users, action.payload],
       };
 
     default:

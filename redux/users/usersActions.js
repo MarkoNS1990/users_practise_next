@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  ADD_USER,
   DELETE_USER,
   FETCH_USERS_BEGIN,
   FETCH_USERS_FAILURE,
@@ -34,6 +35,13 @@ const deleteUser = (user) => {
   };
 };
 
+const addUser = (user) => {
+  return {
+    type: ADD_USER,
+    payload: user,
+  };
+};
+
 export const fetchUsers = () => {
   return (dispatch) => {
     dispatch(fetchUsersBegin);
@@ -49,5 +57,13 @@ export const fetchDeleteUser = (user) => {
     axios
       .delete(`https://jsonplaceholder.typicode.com/users/${user.id}`)
       .then((res) => dispatch(deleteUser(user)));
+  };
+};
+
+export const fetchAddUser = (user) => {
+  return (dispatch) => {
+    axios
+      .post("https://jsonplaceholder.typicode.com/users")
+      .then((res) => dispatch(addUser(user)));
   };
 };
