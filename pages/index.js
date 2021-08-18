@@ -58,26 +58,28 @@ export default function Home() {
           <tbody className="bg-white ">
             {users &&
               users.map((user) => (
-                <tr
-                  key={user.id}
-                  className="bg-emerald-200 border-2 border-gray-300"
-                >
-                  <td className="font-semibold text-2xl cursor-pointer px-6 py-4 whitespace-nowrap">
-                    {user.name}
-                  </td>
-                  <td>
-                    <PencilIcon
-                      className="h-7 w-7 text-blue-500 cursor-pointer ml-2"
-                      onClick={() => onUserClick(user)}
-                    />
-                  </td>
-                  <td>
-                    <TrashIcon
-                      className="h-7 w-7 text-red-500 cursor-pointer mr-2"
-                      onClick={() => dispatch(fetchDeleteUser(user))}
-                    />
-                  </td>
-                </tr>
+                <>
+                  <tr
+                    key={user.id}
+                    className="bg-emerald-200 border-2 border-gray-300"
+                  >
+                    <td className="font-semibold text-2xl cursor-pointer px-6 py-4 whitespace-nowrap">
+                      {user.name}
+                    </td>
+                    <td>
+                      <PencilIcon
+                        className="h-7 w-7 text-blue-500 cursor-pointer ml-2"
+                        onClick={() => onUserClick(user)}
+                      />
+                    </td>
+                    <td>
+                      <TrashIcon
+                        className="h-7 w-7 text-red-500 cursor-pointer mr-2"
+                        onClick={() => dispatch(fetchDeleteUser(user))}
+                      />
+                    </td>
+                  </tr>
+                </>
               ))}
           </tbody>
         </table>
@@ -85,7 +87,7 @@ export default function Home() {
           className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           onClick={onAddUserClick}
         >
-          Add user
+          {!showInput ? "Add user" : "Close"}
         </button>
         {showInput && (
           <div className="flex items-center justify-center">
