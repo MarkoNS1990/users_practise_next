@@ -1,7 +1,9 @@
 import Head from "next/head";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchUsers } from "../redux/users/usersActions";
+import { fetchDeleteUser, fetchUsers } from "../redux/users/usersActions";
+import { TrashIcon, PencilIcon } from "@heroicons/react/solid";
+import { BeakerIcon } from "@heroicons/react/solid";
 
 export default function Home() {
   const users = useSelector((state) => state.users);
@@ -19,8 +21,39 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>
-        {users && users.map((user) => <li key={user.id}>{user.name}</li>)}
+      <div className="flex flex-col items-center justify-center mt-5">
+        <table className="table-auto bg-red-200 w-200 ">
+          <thead>
+            <tr className="border-2">
+              <th className="text-3xl">Users</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white ">
+            {users &&
+              users.map((user) => (
+                <tr
+                  key={user.id}
+                  className="bg-emerald-200 border-2 border-gray-300"
+                >
+                  <td className="font-semibold text-2xl cursor-pointer px-6 py-4 whitespace-nowrap">
+                    {user.name}
+                  </td>
+                  <td>
+                    <TrashIcon
+                      className="h-5 w-5 text-red-500 cursor-pointer"
+                      onClick={() => dispatch(fetchDeleteUser(user))}
+                    />
+                  </td>
+                  <td>
+                    <PencilIcon className="h-5 w-5 text-blue-500 cursor-pointer /" />
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Add user
+        </button>
       </div>
     </div>
   );

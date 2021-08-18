@@ -1,4 +1,5 @@
 import {
+  DELETE_USER,
   FETCH_USERS_BEGIN,
   FETCH_USERS_FAILURE,
   FETCH_USERS_SUCCESS,
@@ -26,8 +27,13 @@ const usersReducer = (state = initialState, action) => {
     case FETCH_USERS_FAILURE:
       return {
         ...state,
-        error: action.error,
+        error: action.payload,
         loading: false,
+      };
+    case DELETE_USER:
+      return {
+        ...state,
+        users: [...state.users.filter((user) => user !== action.payload)],
       };
     default:
       return state;
