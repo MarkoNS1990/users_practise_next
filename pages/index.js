@@ -10,6 +10,7 @@ import { TrashIcon, PencilIcon } from "@heroicons/react/solid";
 import Popup from "../components/Popup";
 import { fetchSingleUser } from "../redux/user/userActions";
 import axios from "axios";
+import Pagination from "../components/Pagination";
 
 export default function Home() {
   const users = useSelector((state) => state.users.users);
@@ -18,6 +19,13 @@ export default function Home() {
 
   const [showInput, setShowInput] = useState(false);
   const [name, setName] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage, setUsersPerPage] = useState(10);
+  const [pages, setPages] = useState();
+
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
   useEffect(() => {
     dispatch(fetchUsers());
@@ -44,6 +52,10 @@ export default function Home() {
     setName("");
   };
 
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div>
       <Head>
@@ -53,6 +65,22 @@ export default function Home() {
       </Head>
 
       <div className="flex flex-col items-center justify-center mt-5">
+        <div className="flex">
+          <input
+            type="number"
+            placeholder="users per page"
+            onChange={(e) => setPages(e.target.value)}
+            value={pages}
+            className="shadow border m-2 flex-grow text-gray appearance-none rounded border-gray-200 focus:border-purple-500 focus:bg-white outline-none"
+          />
+          <button
+            onClick={() => setUsersPerPage(pages)}
+            className="bg-blue-200 py-2 px-3 rounded-xl font-semibold text-red-800"
+          >
+            Set
+          </button>
+        </div>
+
         <table className="table-auto bg-red-200 w-200 ">
           <thead>
             <tr className="border-2">
@@ -61,7 +89,7 @@ export default function Home() {
           </thead>
           <tbody className="bg-white ">
             {users &&
-              users.map((user) => (
+              currentUsers.map((user) => (
                 <tr
                   key={user.id}
                   className="bg-emerald-200 border-2 border-gray-300"
@@ -109,6 +137,11 @@ export default function Home() {
           </div>
         )}
       </div>
+      <Pagination
+        totalUsers={users.length}
+        usersPerPage={usersPerPage}
+        paginate={paginate}
+      />
       <Popup showModal={showModal} setShowModal={setShowModal} />
     </div>
   );
