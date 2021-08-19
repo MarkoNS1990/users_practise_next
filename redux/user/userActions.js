@@ -27,7 +27,7 @@ export const fetchSingleUser = (user) => {
 export const fetchUpdateUser = (user) => {
   return (dispatch) => {
     axios
-      .put(`https://jsonplaceholder.typicode.com/users/${user.id}`, {
+      .put(`/api/users/${user.id}`, {
         name: user.name,
       })
       .then((res) => dispatch(updateUser(user)));
