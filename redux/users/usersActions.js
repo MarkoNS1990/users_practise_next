@@ -46,8 +46,8 @@ export const fetchUsers = () => {
   return (dispatch) => {
     dispatch(fetchUsersBegin);
     axios
-      .get("https://jsonplaceholder.typicode.com/users")
-      .then((res) => dispatch(fetchUsersSuccess(res.data)));
+      .get("/api/users")
+      .then((res) => dispatch(fetchUsersSuccess(res.data.users)));
   };
 };
 
@@ -55,7 +55,7 @@ export const fetchDeleteUser = (user) => {
   return (dispatch) => {
     dispatch(fetchUsersBegin);
     axios
-      .delete(`https://jsonplaceholder.typicode.com/users/${user.id}`)
+      .delete(`/api/users/${user.id}`, { id: user.id })
       .then((res) => dispatch(deleteUser(user)));
   };
 };
@@ -63,7 +63,7 @@ export const fetchDeleteUser = (user) => {
 export const fetchAddUser = (user) => {
   return (dispatch) => {
     axios
-      .post("https://jsonplaceholder.typicode.com/users")
+      .post("/api/users", { name: user.name, id: user.id })
       .then((res) => dispatch(addUser(user)));
   };
 };

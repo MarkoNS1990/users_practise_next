@@ -9,6 +9,7 @@ import {
 import { TrashIcon, PencilIcon } from "@heroicons/react/solid";
 import Popup from "../components/Popup";
 import { fetchSingleUser } from "../redux/user/userActions";
+import axios from "axios";
 
 export default function Home() {
   const users = useSelector((state) => state.users.users);
@@ -31,13 +32,15 @@ export default function Home() {
     setShowInput((input) => !input);
   };
 
-  const Ids = users.map((user) => user.id);
-  const IdsSorted = Ids.sort((a, b) => a - b);
-
   const addUser = () => {
-    dispatch(
-      fetchAddUser({ name: name, id: IdsSorted[IdsSorted.length - 1] + 1 })
-    );
+    if (users) {
+      const Ids = users.map((user) => user.id);
+      const IdsSorted = Ids.sort((a, b) => a - b);
+      dispatch(
+        fetchAddUser({ name: name, id: IdsSorted[IdsSorted.length - 1] + 1 })
+      );
+    }
+
     setName("");
   };
 
@@ -58,29 +61,27 @@ export default function Home() {
           </thead>
           <tbody className="bg-white ">
             {users &&
-              users?.map((user) => (
-                <>
-                  <tr
-                    key={user.id}
-                    className="bg-emerald-200 border-2 border-gray-300"
-                  >
-                    <td className="font-semibold text-2xl px-6 py-4 whitespace-nowrap">
-                      {user.name}
-                    </td>
-                    <td>
-                      <PencilIcon
-                        className="h-7 w-7 text-blue-500 cursor-pointer ml-2"
-                        onClick={() => onUserClick(user)}
-                      />
-                    </td>
-                    <td>
-                      <TrashIcon
-                        className="h-7 w-7 text-red-500 cursor-pointer mr-2"
-                        onClick={() => dispatch(fetchDeleteUser(user))}
-                      />
-                    </td>
-                  </tr>
-                </>
+              users.map((user) => (
+                <tr
+                  key={user.id}
+                  className="bg-emerald-200 border-2 border-gray-300"
+                >
+                  <td className="font-semibold text-2xl px-6 py-4 whitespace-nowrap">
+                    {user.name}
+                  </td>
+                  <td>
+                    <PencilIcon
+                      className="h-7 w-7 text-blue-500 cursor-pointer ml-2"
+                      onClick={() => onUserClick(user)}
+                    />
+                  </td>
+                  <td>
+                    <TrashIcon
+                      className="h-7 w-7 text-red-500 cursor-pointer mr-2"
+                      onClick={() => dispatch(fetchDeleteUser(user))}
+                    />
+                  </td>
+                </tr>
               ))}
           </tbody>
         </table>
