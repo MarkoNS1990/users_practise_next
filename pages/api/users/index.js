@@ -1,11 +1,12 @@
 import { users } from "../../../data/users";
 import fs from "fs";
 import path from "path";
+import { getRandomImg } from "../../../helpers/imagePicker";
 
 export function buildUsersPath() {
   return path.join(process.cwd(), "data", "users.json");
 }
-
+// TODO prebaci preko promise da cita async
 export function extractUser(filePath) {
   const fileData = fs.readFileSync(filePath);
   const data = JSON.parse(fileData);
@@ -16,10 +17,12 @@ export default function handler(req, res) {
   if (req.method === "POST") {
     const name = req.body.name;
     const id = req.body.id;
+    const image = req.body.image;
 
     const newUser = {
       id: id,
       name: name,
+      image: req.body.image,
     };
     const filePath = buildUsersPath();
     const data = extractUser(filePath);

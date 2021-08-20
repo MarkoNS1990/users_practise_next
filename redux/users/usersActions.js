@@ -63,7 +63,7 @@ export const fetchDeleteUser = (user) => {
 export const fetchAddUser = (user) => {
   return (dispatch) => {
     axios
-      .post("/api/users", { name: user.name, id: user.id })
+      .post("/api/users", { name: user.name, id: user.id, image: user.image })
       .then((res) => dispatch(addUser(user)));
   };
 };

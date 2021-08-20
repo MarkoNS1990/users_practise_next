@@ -11,6 +11,9 @@ import Popup from "../components/Popup";
 import { fetchSingleUser } from "../redux/user/userActions";
 import axios from "axios";
 import Pagination from "../components/Pagination";
+import Image from "next/image";
+import { getRandomImg } from "../helpers/imagePicker";
+import Link from "next/link";
 
 export default function Home() {
   const users = useSelector((state) => state.users.users);
@@ -20,7 +23,7 @@ export default function Home() {
   const [showInput, setShowInput] = useState(false);
   const [name, setName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage, setUsersPerPage] = useState(10);
+  const [usersPerPage, setUsersPerPage] = useState(5);
   const [pages, setPages] = useState();
 
   const indexOfLastUser = currentPage * usersPerPage;
@@ -45,7 +48,11 @@ export default function Home() {
       const Ids = users.map((user) => user.id);
       const IdsSorted = Ids.sort((a, b) => a - b);
       dispatch(
-        fetchAddUser({ name: name, id: IdsSorted[IdsSorted.length - 1] + 1 })
+        fetchAddUser({
+          name: name,
+          id: IdsSorted[IdsSorted.length - 1] + 1,
+          image: getRandomImg(),
+        })
       );
     }
 
@@ -69,6 +76,7 @@ export default function Home() {
           <input
             type="number"
             placeholder="users per page"
+            min={1}
             onChange={(e) => setPages(e.target.value)}
             value={pages}
             className="shadow border m-2 flex-grow text-gray appearance-none rounded border-gray-200 focus:border-purple-500 focus:bg-white outline-none"
@@ -81,7 +89,7 @@ export default function Home() {
           </button>
         </div>
 
-        <table className="table-auto bg-red-200 w-200 ">
+        <table className="table-auto bg-red-200 ">
           <thead>
             <tr className="border-2">
               <th className="text-3xl">Users</th>
@@ -95,7 +103,17 @@ export default function Home() {
                   className="bg-emerald-200 border-2 border-gray-300"
                 >
                   <td className="font-semibold text-2xl px-6 py-4 whitespace-nowrap">
-                    {user.name}
+                    <Link href={`/${user.id}`}>
+                      <div className="flex items-center cursor-pointer">
+                        <Image
+                          src={user.image}
+                          width={60}
+                          height={60}
+                          className="rounded-lg "
+                        />
+                        <p className="font-semibold ml-2">{user.name}</p>
+                      </div>
+                    </Link>
                   </td>
                   <td>
                     <PencilIcon

@@ -13,7 +13,7 @@ function Popup({ showModal, setShowModal }) {
   const [name, setName] = useState("");
 
   const updateUser = () => {
-    const newUser = { name: name, id: user.id };
+    const newUser = { name: name, id: user.id, image: user.image };
     dispatch(fetchUpdateUser(newUser));
     setName("");
     setShowModal(false);

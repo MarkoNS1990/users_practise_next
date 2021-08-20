@@ -19,7 +19,7 @@ const updateUser = (user) => {
 export const fetchSingleUser = (user) => {
   return (dispatch) => {
     axios
-      .get(`https://jsonplaceholder.typicode.com/users/${user.id}`)
+      .get(`/api/users/${user.id}`)
       .then((res) => dispatch(getSingleUser(user)));
   };
 };
@@ -29,6 +29,7 @@ export const fetchUpdateUser = (user) => {
     axios
       .put(`/api/users/${user.id}`, {
         name: user.name,
+        image: user.image,
       })
       .then((res) => dispatch(updateUser(user)));
   };

@@ -1,5 +1,6 @@
 import { buildUsersPath, extractUser } from ".";
 import fs from "fs";
+
 export default function handler(req, res) {
   const { userId } = req.query;
 
@@ -10,7 +11,7 @@ export default function handler(req, res) {
     const deletedUser = data.find((user) => user.id === parseInt(userId));
 
     const index = data.findIndex((user) => user.id === parseInt(userId));
-    console.log(data);
+
     data.splice(index, 1);
     fs.writeFileSync(filePath, JSON.stringify(data));
 
@@ -27,5 +28,11 @@ export default function handler(req, res) {
     fs.writeFileSync(filePath, JSON.stringify(data));
 
     res.status(200).json({ message: "Success" });
+  } else {
+    const filePath = buildUsersPath();
+    const data = extractUser(filePath);
+    const userData = data.find((user) => user.id === parseInt(userId));
+
+    res.status(200).json({ user: userData });
   }
 }
