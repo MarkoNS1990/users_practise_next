@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import User from "../components/User";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
+import MyCarousel from "../components/MyCarousel";
 
 const userId = () => {
   const router = useRouter();
@@ -20,11 +20,15 @@ const userId = () => {
     <div className="flex flex-col items-center justify-center">
       {user && (
         <>
-          <h2 className="text-3xl font-extrabold">{user.name}</h2>
-          <Image src={user.image} height={300} width={300} />
+          <h2 className="text-3xl font-extrabold mb-2">{user.name}</h2>
+          <div>
+            <MyCarousel />
+          </div>
         </>
       )}
-      <Link href="/">Go back</Link>
+      <Link href="/">
+        <a className="font-semibold text-red-900 mt-3">Go back</a>
+      </Link>
     </div>
   );
 };

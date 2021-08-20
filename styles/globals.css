@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

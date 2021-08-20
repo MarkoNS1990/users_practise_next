@@ -100,9 +100,9 @@ export default function Home() {
               currentUsers.map((user) => (
                 <tr
                   key={user.id}
-                  className="bg-emerald-200 border-2 border-gray-300"
+                  className="bg-emerald-200 border-2 border-gray-300 hover:bg-indigo-200 hover:scale-105"
                 >
-                  <td className="font-semibold text-2xl px-6 py-4 whitespace-nowrap">
+                  <td className="font-semibold text-2xl px-6 py-4 whitespace-nowrap ">
                     <Link href={`/${user.id}`}>
                       <div className="flex items-center cursor-pointer">
                         <Image
